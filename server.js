@@ -1,18 +1,13 @@
 const express = require("express");
-var path = require("path");
+let path = require("path");
 
 const app = express();
 const PORT = process.env.PORT | 3000;
 
-let reservationList = [
-    {
-        number: "1",
-        name: "Jehyun",
-        phoneNumber: "123123123",
-        email: "email@email.com",
-        id: "id"
-    }
-];
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+let reservationList = [];
 let waitList = [];
 
 app.get('/', (req, res) => {
@@ -35,6 +30,12 @@ app.get('/api/waitlist', (req, res) => {
     return res.json(waitList);
 });
 
+app.post('/api/reservation/:newReservation', (req, res) => {
+    console.log(JSON.parse(req.params.newReservation));
+    reservationList.push(req.params.newReservation);
+    return res.json(reservationList);
+});
+
 app.post('/api/clear', (req, res) => {
     reservationList = [];
     return res.json(reservationList);
@@ -45,3 +46,10 @@ app.post('/api/clear', (req, res) => {
 app.listen(PORT, () => {
     console.log(`App listening on PORT ${PORT}`);
 })
+
+function reservation(name, phoneNumber, email, id){
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+    this.email = email;
+    this.id = id;
+}

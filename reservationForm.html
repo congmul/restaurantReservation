@@ -53,19 +53,26 @@
     </div>
 </body>
 <script type="text/javascript">
-$("#submit").on("click", (e) => {
-    e.preventDefault();
-    let reservation = new Object();
+    $("#submit").on("click", (e) => {
+        e.preventDefault();
+        let reservation = new Object();
 
-    reservation["name"] = $("#name").val().trim();
-    reservation["phoneNumber"] = $("#phoneNumber").val().trim();
-    reservation["email"] = $("#email").val().trim();
-    reservation["id"] = $("#id").val().trim();
+        reservation["name"] = $("#name").val().trim();
+        reservation["phoneNumber"] = $("#phoneNumber").val().trim();
+        reservation["email"] = $("#email").val().trim();
+        reservation["id"] = $("#id").val().trim();
 
-    console.log(reservation);
-    $.ajax()
-});
-    
+        console.log(reservation);
+
+        alert("Yay! you are officially booked!");
+        $.ajax({
+            url: "/api/reservation/" + JSON.stringify(reservation),
+            method: "POST"
+        });
+
+
+    });
+
 </script>
 
 </html>
