@@ -13,6 +13,9 @@
     <!-- Font AweSome Link CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+    <!-- jQuery Link-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+
 </head>
 
 <body>
@@ -34,40 +37,140 @@
             </div>
             <div class="card-body">
                 <!-- Result Form -->
-                <div class="border">
-                    <div class="mt-3 ml-3 mb-3">
-                        <p class="card-text">{Table} {#}${1}</p>
-                        <hr class="my-4">
-                        <p class="card-text">{ID}: ${ID}</p>
-                        <p class="card-text">{Name}: ${Name}</p>
-                        <p class="card-text">{Email}: ${Email}</p>
-                        <p class="card-text">{Phone}: ${Phone}</p>
-                    </div>
+                <div class="border" id="tables">
                 </div>
             </div>
-      </div>
-      <div class="card mb-3"  style="font-weight: 600; font-size: 25px">
-        <div class="card-header">
-          Waiting List
         </div>
-        <div class="card-body">
-            <!-- Result Form -->
-            <div class="border">
-                <div class="mt-3 ml-3 mb-3">
-                    <p class="card-text">{Table} {#}${1}</p>
+        <div class="card mb-3" style="font-weight: 600; font-size: 25px">
+            <div class="card-header">
+                Waiting List
+            </div>
+            <div class="card-body">
+                <!-- Result Form -->
+                <div class="border" id="waitingList">
+                    <!-- <div class="mt-3 ml-3 mb-3">
+                        <p class="card-text">{Table} {#}${1}</p>
                     <hr class="my-4">
                     <p class="card-text">{ID}: ${ID}</p>
                     <p class="card-text">{Name}: ${Name}</p>
                     <p class="card-text">{Email}: ${Email}</p>
                     <p class="card-text">{Phone}: ${Phone}</p>
+                    </div> -->
                 </div>
             </div>
         </div>
-      </div>
-    <div class="mb-5">
-    <a href="#">Clear Table</a> |  <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+        <div class="mb-5 link">
+            <a href="#" id="clearTable">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a
+                href="/api/waitlist">API Wait List</a>
+        </div>
     </div>
-</div>
 </body>
+<script type="text/javascript">
+    display();
+    function display() {
+        $.get("/api/tables", (data) => {
+            console.log(data);
+            if (data.length >= 1) {
+                data.forEach(element => {
+                    console.log(element);
+                    $("#tables").show();
+
+                    let div = $("<div>");
+                    let tableEl = $("<p>");
+                    let hrEl = $("<hr>");
+                    let idEl = $("<p>");
+                    let nameEl = $("<p>");
+                    let emailEl = $("<p>");
+                    let phoneEl = $("<p>");
+
+                    div.attr("class", "mt-3 ml-3 mb-3");
+                    hrEl.attr("class", "my-4");
+                    idEl.attr("class", "card-text");
+                    nameEl.attr("class", "card-text");
+                    emailEl.attr("class", "card-text");
+                    phoneEl.attr("class", "card-text");
+
+                    tableEl.text("Table #" + element.id);
+                    idEl.text("ID: " + element.number);
+                    nameEl.text("Name: " + element.name);
+                    emailEl.text("Email: " + element.email);
+                    phoneEl.text("Phone: " + element.phoneNumber);
+
+                    div.append(tableEl);
+                    div.append(hrEl);
+                    div.append(idEl);
+                    div.append(nameEl);
+                    div.append(emailEl);
+                    div.append(phoneEl);
+
+                    $("#tables").append(div);
+                });
+            } else {
+                $("#tables").hide();
+            }
+        });
+
+        $.get("/api/waitlist", (data) => {
+            console.log(data);
+            if (data.length >= 1) {
+                $("#waitingList").show();
+                data.forEach(element => {
+                    console.log(element);
+
+                    let div = $("<div>");
+                    let tableEl = $("<p>");
+                    let hrEl = $("<hr>");
+                    let idEl = $("<p>");
+                    let nameEl = $("<p>");
+                    let emailEl = $("<p>");
+                    let phoneEl = $("<p>");
+
+                    div.attr("class", "mt-3 ml-3 mb-3");
+
+                    div.attr("class", "mt-3 ml-3 mb-3");
+                    hrEl.attr("class", "my-4");
+                    idEl.attr("class", "card-text");
+                    nameEl.attr("class", "card-text");
+                    emailEl.attr("class", "card-text");
+                    phoneEl.attr("class", "card-text");
+
+                    tableEl.text("Table #" + element.id);
+                    idEl.text("ID:" + element.number);
+                    nameEl.text("Name: " + element.name);
+                    emailEl.text("Email: " + element.email);
+                    phoneEl.text("Phone: " + element.phoneNumber);
+
+                    div.append(tableEl);
+                    div.append(hrEl);
+                    div.append(idEl);
+                    div.append(nameEl);
+                    div.append(emailEl);
+                    div.append(phoneEl);
+
+                    $("#waitingList").append(div);
+
+                });
+
+            } else {
+                $("#waitingList").hide();
+            }
+        });
+    }
+
+    function clearTable(){
+        alert("Clearing...");
+        $.ajax({
+            url:"/api/clear",
+            method: "POST" }).then(function(){
+                $("#tables").empty();
+                $("#waitingList").empty();
+
+                $("#tables").hide();
+                $("#waitingList").hide();
+            });
+    }
+    $("#clearTable").on("click", clearTable);
+
+</script>
 
 </html>
