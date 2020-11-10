@@ -13,6 +13,8 @@
     <!-- Font AweSome Link CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
+    <!-- jQuery Link-->
+    <script src="https://code.jquery.com/jquery.js"></script>
 </head>
 
 <body>
@@ -34,14 +36,14 @@
             <div class="card-body">
                 <form>
                     <label for="name">Name</label>
-                    <input type="name" id="inputPassword5" class="form-control mb-3">
+                    <input type="name" id="name" class="form-control mb-3">
                     <label for="phoneNumber">Phone Number</label>
                     <input type="phoneNumber" id="phoneNumber" class="form-control mb-3">
                     <label for="email">Email</label>
                     <input type="email" id="email" class="form-control mb-3">
                     <label for="id">Unique ID</label>
                     <input type="id" id="id" class="form-control mb-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
@@ -50,5 +52,20 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+$("#submit").on("click", (e) => {
+    e.preventDefault();
+    let reservation = new Object();
+
+    reservation["name"] = $("#name").val().trim();
+    reservation["phoneNumber"] = $("#phoneNumber").val().trim();
+    reservation["email"] = $("#email").val().trim();
+    reservation["id"] = $("#id").val().trim();
+
+    console.log(reservation);
+    $.ajax()
+});
+    
+</script>
 
 </html>
