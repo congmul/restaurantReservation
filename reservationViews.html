@@ -45,16 +45,6 @@
             </div>
             <div class="card-body" id="waitingListResult">
                 <!-- Result Form -->
-                <div class="border" id="waitingList">
-                    <!-- <div class="mt-3 ml-3 mb-3">
-                        <p class="card-text">{Table} {#}${1}</p>
-                    <hr class="my-4">
-                    <p class="card-text">{ID}: ${ID}</p>
-                    <p class="card-text">{Name}: ${Name}</p>
-                    <p class="card-text">{Email}: ${Email}</p>
-                    <p class="card-text">{Phone}: ${Phone}</p>
-                    </div> -->
-                </div>
             </div>
         </div>
         <div class="mb-5 link">
@@ -69,8 +59,9 @@
         $.get("/api/tables", (data) => {
             console.log("Reservation Table");
             console.log(data);
+            let count = 1;
             // console.log(JSON.parse(data));
-            if (data.length >= 1) {
+            // if (data.length >= 1) {
                 data.forEach(element => {
                     parseElement = JSON.parse(element);
                     console.log(parseElement);
@@ -96,7 +87,8 @@
 
                         
                     console.log(parseElement.id);
-                    tableEl.text("Table #" + parseElement.id);
+                    tableEl.text("Table #" + count);
+                    count++;
                     idEl.text("ID: " + parseElement.id);
                     nameEl.text("Name: " + parseElement.name);
                     emailEl.text("Email: " + parseElement.email);
@@ -113,7 +105,7 @@
 
                     $("#tableResult").append(topDiv);
                 });
-            } 
+            // } 
             // else {
             //     $("#tables").hide();
             // }
@@ -122,8 +114,8 @@
         $.get("/api/waitlist", (data) => {
             console.log("Wainting List Table");
             console.log(data);
-            if (data.length >= 1) {
-                $("#waitingList").show();
+            // if (data.length >= 1) {
+                let count = 1;
                 data.forEach(element => {
                     parseElement = JSON.parse(element);
 
@@ -145,7 +137,8 @@
                     emailEl.attr("class", "card-text");
                     phoneEl.attr("class", "card-text");
                     
-                    tableEl.text("Table #" + parseElement.id);
+                    tableEl.text("Table #" + count);
+                    count++;
                     idEl.text("ID:" + parseElement.id);
                     nameEl.text("Name: " + parseElement.name);
                     emailEl.text("Email: " + parseElement.email);
@@ -161,12 +154,11 @@
                     topDiv.append(div);
 
                     $("#waitingListResult").append(topDiv);
-
                 });
 
-            } else {
-                $("#waitingList").hide();
-            }
+            // } else {
+            //     $("#waitingList").hide();
+            // }
         });
     }
 

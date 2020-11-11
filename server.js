@@ -36,6 +36,12 @@ app.post('/api/reservation/:newReservation', (req, res) => {
     return res.json(reservationList);
 });
 
+app.post('/api/waitlist/:waitlist', (req, res) => {
+    console.log(JSON.parse(req.params.waitlist));
+    waitList.push(req.params.waitlist);
+    return res.json(waitList);
+});
+
 app.post('/api/clear', (req, res) => {
     reservationList = [];
     return res.json(reservationList);

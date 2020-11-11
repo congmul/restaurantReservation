@@ -62,13 +62,26 @@
         reservation["email"] = $("#email").val().trim();
         reservation["id"] = $("#id").val().trim();
 
-        console.log(reservation);
+        // console.log(reservation);
 
-        alert("Yay! you are officially booked!");
-        $.ajax({
-            url: "/api/reservation/" + JSON.stringify(reservation),
-            method: "POST"
+        $.get('/api/tables', (data) => {
+            console.log(data.length);
+            if (data.length <= 5) {
+                alert("Yay! you are officially booked!");
+                $.ajax({
+                    url: "/api/reservation/" + JSON.stringify(reservation),
+                    method: "POST"
+                });
+            }else{
+                alert("Sorry you are on the wait list");
+                $.ajax({
+                    url: "/api/waitlist/" + JSON.stringify(reservation),
+                    method: "POST"
+                });
+            }
         });
+
+
 
 
     });
