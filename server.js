@@ -2,7 +2,7 @@ const express = require("express");
 let path = require("path");
 
 const app = express();
-const PORT = process.env.PORT | 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -51,11 +51,4 @@ app.post('/api/clear', (req, res) => {
 
 app.listen(PORT, () => {
     console.log("App listening on PORT " + PORT);
-})
-
-function reservation(name, phoneNumber, email, id){
-    this.name = name;
-    this.phoneNumber = phoneNumber;
-    this.email = email;
-    this.id = id;
-}
+});
