@@ -50,7 +50,7 @@ app.post('/api/clear', (req, res) => {
 
 
 app.listen(PORT, () => {
-    console.log(`App listening on PORT ${PORT}`);
+    console.log("App listening on PORT " + PORT);
 })
 
 function reservation(name, phoneNumber, email, id){
